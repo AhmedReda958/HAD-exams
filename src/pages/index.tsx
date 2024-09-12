@@ -19,7 +19,7 @@ export default function Home() {
     <div className="container mx-auto p-4 max-w-4xl">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Exams</h1>
-        <Link href="/exam-editor" passHref>
+        <Link href="/editor">
           <Button>
             <PlusCircle className="h-4 w-4 mr-2" />
             Create New Exam
