@@ -5,15 +5,14 @@ import { PlusCircle, Eye, Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Exam } from "@/types/exam";
+import { getExamsFromLocalStorage } from "@/utils/examActions";
 
 export default function Home() {
   const [exams, setExams] = useState<Exam[]>([]);
 
   useEffect(() => {
-    const storedExams = localStorage.getItem("exams");
-    if (storedExams) {
-      setExams(JSON.parse(storedExams));
-    }
+    const storedExams = getExamsFromLocalStorage();
+    setExams(storedExams);
   }, []);
 
   return (

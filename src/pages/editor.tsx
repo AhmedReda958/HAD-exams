@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PlusCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,8 +9,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Exam, Question, Answer } from "@/types/exam";
 import QuestionEditorCard from "@/components/ui/QuestionEditorCard";
-import { saveExamToLocalStorage } from "@/utils/examActions";
+import { getExamByIndex, saveExamToLocalStorage } from "@/utils/examActions";
 import { useToast } from "@/hooks/use-toast";
+import { useSearchParams, useRouter } from "next/navigation";
 
 export default function ExamEditor() {
   const [exam, setExam] = useState<Exam>({
@@ -18,8 +19,11 @@ export default function ExamEditor() {
     questions: [],
     description: "",
   });
-
   const { toast } = useToast();
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const examId = searchParams.get("examId");
 
   const addQuestion = () => {
     setExam((prev) => ({
@@ -119,8 +123,18 @@ export default function ExamEditor() {
       console.log("Exam submitted:", exam);
       saveExamToLocalStorage(exam);
       toast({ title: "Exam saved successfully", variant: "success" });
+      router.push("/");
     }
   };
+
+  useEffect(() => {
+    if (examId) {
+      const exam = getExamByIndex(parseInt(examId));
+      if (exam) {
+        setExam(exam);
+      }
+    }
+  }, [examId]);
 
   return (
     <div className="container mx-auto p-4 max-w-3xl">
@@ -182,7 +196,7 @@ export default function ExamEditor() {
         disabled={!isExamValid()}
         className="w-full"
       >
-        Submit Exam
+        {examId ? "Update Exam" : "Save Exam"}
       </Button>
     </div>
   );
