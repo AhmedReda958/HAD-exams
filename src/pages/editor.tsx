@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Exam, Question, Answer } from "@/types/exam";
-import QuestionEditorCard from "@/components/ui/QuestionEditorCard";
+import QuestionEditorCard from "@/components/QuestionEditorCard";
 import { getExamByIndex, saveExamToLocalStorage } from "@/utils/examActions";
 import { useToast } from "@/hooks/use-toast";
 import { useSearchParams, useRouter } from "next/navigation";
