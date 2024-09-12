@@ -9,6 +9,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Exam, Question, Answer } from "@/types/exam";
 import QuestionEditorCard from "@/components/ui/QuestionEditorCard";
+import { saveExamToLocalStorage } from "@/utils/examActions";
+import { useToast } from "@/hooks/use-toast";
 
 export default function ExamEditor() {
   const [exam, setExam] = useState<Exam>({
@@ -16,6 +18,8 @@ export default function ExamEditor() {
     questions: [],
     description: "",
   });
+
+  const { toast } = useToast();
 
   const addQuestion = () => {
     setExam((prev) => ({
@@ -113,6 +117,8 @@ export default function ExamEditor() {
   const handleSubmit = () => {
     if (isExamValid()) {
       console.log("Exam submitted:", exam);
+      saveExamToLocalStorage(exam);
+      toast({ title: "Exam saved successfully", variant: "success" });
     }
   };
 
